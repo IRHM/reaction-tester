@@ -1,5 +1,39 @@
+import React from "react";
+import Helpers from "./helpers";
+
 export default class ReactionGame {
-  public static start() {
-    console.log("s");
+  constructor(
+    private setBackgroundColor: React.Dispatch<React.SetStateAction<string>>,
+    private setReactionResult: React.Dispatch<React.SetStateAction<string | null>>
+  ) {
+    console.log("initialized");
+
+    this.start();
+  }
+
+  private greenBackgroundIsShowing = false;
+  private timeStarted: Date | null = null;
+
+  public async start() {
+    console.log("start");
+
+    await Helpers.sleep(Helpers.randomNumFromRange(1500, 2000));
+    this.showGreenBackground();
+  }
+
+  public getReactionTime() {
+    if (this.greenBackgroundIsShowing && this.timeStarted) {
+      let diff = new Date().getTime() - this.timeStarted.getTime();
+
+      this.setReactionResult(`${diff}ms`);
+    } else {
+      this.setReactionResult("Too Soon!");
+    }
+  }
+
+  private showGreenBackground() {
+    this.greenBackgroundIsShowing = true;
+    this.setBackgroundColor("#49FF00");
+    this.timeStarted = new Date();
   }
 }
