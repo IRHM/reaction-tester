@@ -4,18 +4,17 @@ import Helpers from "./helpers";
 export default class ReactionGame {
   constructor(
     private setBackgroundColor: React.Dispatch<React.SetStateAction<string>>,
-    private setReactionResult: React.Dispatch<React.SetStateAction<string | null>>
-  ) {
-    console.log("initialized");
-
-    this.start();
-  }
+    private setReactionResult: React.Dispatch<React.SetStateAction<string | null>>,
+    private setGameStatus: React.Dispatch<React.SetStateAction<"instructions" | "playing">>
+  ) {}
 
   private greenBackgroundIsShowing = false;
   private timeStarted: Date | null = null;
 
   public async start() {
     console.log("start");
+
+    this.setGameStatus("playing");
 
     await Helpers.sleep(Helpers.randomNumFromRange(1500, 2000));
     this.showGreenBackground();
