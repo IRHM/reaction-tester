@@ -3,15 +3,19 @@ import React from "react";
 import { View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Reaction from "./src/views/Reaction";
+import { store } from "./src/store";
+import { Provider } from "react-redux";
 
 export default function App() {
   return (
     <SafeAreaView>
-      <View>
-        <Reaction />
+      <Provider store={store}>
+        <View>
+          <Reaction />
 
-        <StatusBar style="auto" />
-      </View>
+          <StatusBar style="auto" />
+        </View>
+      </Provider>
     </SafeAreaView>
   );
 }
