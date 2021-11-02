@@ -7,16 +7,10 @@ import { useSelector } from "react-redux";
 
 export default function Reaction() {
   const [game, setGame] = useState<ReactionGame | null>(null);
-
-  // TODO: Move to an actual store
-  // const [backgroundColor, setBackgroundColor] = useState("#fff");
-  // const [reactionResult, setReactionResult] = useState<string | null>(null);
-  // const [gameStatus, setGameStatus] = useState<GameStatus>(GameStatus.Instructions);
-
   const gameState = useSelector((state: RootState) => state.game.value);
 
   useEffect(() => {
-    setGame(new ReactionGame(gameState));
+    setGame(new ReactionGame());
   }, []);
 
   let onClickAction: any;
@@ -32,6 +26,9 @@ export default function Reaction() {
         break;
       case GameStatus.Reacting:
         if (game) onClickAction = game.getReactionTime;
+        break;
+      case GameStatus.ReactionResult:
+        if (game) onClickAction = game.startNextRound;
         stepToRender = <Result result={gameState.reactionResult} />;
         break;
       default:
@@ -41,6 +38,7 @@ export default function Reaction() {
   }
 
   const onClick = () => {
+    // TODO: Sort this out so we can run onClickAction() instead of having 2 switch statements
     // if (onClickAction && game) onClickAction();
     switch (gameState.gameStatus) {
       case GameStatus.Instructions:
@@ -48,6 +46,9 @@ export default function Reaction() {
         break;
       case GameStatus.Reacting:
         if (game) game.getReactionTime();
+        break;
+      case GameStatus.ReactionResult:
+        if (game) game.startNextRound();
         break;
     }
   };
@@ -80,7 +81,16 @@ function Instructions() {
 }
 
 function Result(props: any) {
-  return <View>{props.result != null && <Text style={styles.reactionResult}>{props.result}</Text>}</View>;
+  return (
+    <View>
+      {props.result != null && (
+        <View>
+          <Text style={styles.reactionResult}>{props.result}</Text>
+          <Text style={styles.centered}>Click to continue</Text>
+        </View>
+      )}
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

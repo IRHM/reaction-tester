@@ -6,7 +6,8 @@ export interface Game {
 
 export enum GameStatus {
   Instructions,
-  Reacting
+  Reacting,
+  ReactionResult
 }
 
 export enum BackgroundColor {
