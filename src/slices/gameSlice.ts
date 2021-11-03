@@ -18,10 +18,17 @@ const gameSlice = createSlice({
     },
     updateReactionResult(state, action: PayloadAction<string>) {
       state.value.reactionResult = action.payload;
+    },
+    addScore(state, action: PayloadAction<number>) {
+      state.value.scores.push(action.payload);
+    },
+    resetScores(state) {
+      state.value.scores = [];
     }
   }
 });
 
-export const { startNew, updateGameStatus, updateBackground, updateReactionResult } = gameSlice.actions;
+export const { startNew, updateGameStatus, updateBackground, updateReactionResult, addScore, resetScores } =
+  gameSlice.actions;
 
 export default gameSlice.reducer;

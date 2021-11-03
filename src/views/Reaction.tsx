@@ -31,6 +31,10 @@ export default function Reaction() {
         if (game) onClickAction = game.startNextRound;
         stepToRender = <Result result={gameState.reactionResult} />;
         break;
+      case GameStatus.FinalResult:
+        if (game) onClickAction = game.start;
+        stepToRender = <FinalResult result={game.getAverageReactionTime()} />;
+        break;
       default:
         stepToRender = <Text>Game status unknown, please reload.</Text>;
         break;
@@ -86,6 +90,24 @@ function Result(props: any) {
       {props.result != null && (
         <View>
           <Text style={styles.reactionResult}>{props.result}</Text>
+          <Text style={styles.centered}>Click to continue</Text>
+        </View>
+      )}
+    </View>
+  );
+}
+
+function FinalResult(props: any) {
+  return (
+    <View>
+      {props.result != null && (
+        <View>
+          {/* {props.result.map((x: number, i: number) => (
+            <Text key={i}>{x}</Text>
+          ))} */}
+
+          <Text>{props.result}</Text>
+
           <Text style={styles.centered}>Click to continue</Text>
         </View>
       )}
