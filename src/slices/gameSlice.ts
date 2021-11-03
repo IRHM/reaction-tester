@@ -4,7 +4,7 @@ import { Game, BackgroundColor, GameStatus } from "./../types";
 const gameSlice = createSlice({
   name: "game",
   initialState: {
-    value: { gameStatus: GameStatus.Instructions } as Game
+    value: { gameStatus: GameStatus.Instructions, backgroundColor: BackgroundColor.White } as Game
   },
   reducers: {
     startNew: (state) => {

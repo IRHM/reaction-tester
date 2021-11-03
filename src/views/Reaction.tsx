@@ -13,26 +13,23 @@ export default function Reaction() {
     setGame(new ReactionGame());
   }, []);
 
-  let onClickAction: any;
-  let stepToRender: any;
+  let stepToRender: JSX.Element = <View></View>;
 
-  console.log(gameState.gameStatus);
+  console.log("GameStatus:", gameState.gameStatus);
 
   if (game) {
     switch (gameState.gameStatus) {
       case GameStatus.Instructions:
-        if (game) onClickAction = game.start;
         stepToRender = <Instructions />;
         break;
       case GameStatus.Reacting:
-        if (game) onClickAction = game.getReactionTime;
+        // No need to render anything whilst reacting yet, could add
+        // text saying click when see colour green in future
         break;
       case GameStatus.ReactionResult:
-        if (game) onClickAction = game.startNextRound;
         stepToRender = <Result result={gameState.reactionResult} />;
         break;
       case GameStatus.FinalResult:
-        if (game) onClickAction = game.start;
         stepToRender = <FinalResult result={game.getAverageReactionTime()} />;
         break;
       default:
@@ -42,19 +39,7 @@ export default function Reaction() {
   }
 
   const onClick = () => {
-    // TODO: Sort this out so we can run onClickAction() instead of having 2 switch statements
-    // if (onClickAction && game) onClickAction();
-    switch (gameState.gameStatus) {
-      case GameStatus.Instructions:
-        if (game) game.start();
-        break;
-      case GameStatus.Reacting:
-        if (game) game.getReactionTime();
-        break;
-      case GameStatus.ReactionResult:
-        if (game) game.startNextRound();
-        break;
-    }
+    if (game) game.handleGameClick(gameState.gameStatus);
   };
 
   if (game) {
@@ -74,19 +59,19 @@ export default function Reaction() {
 
 function Instructions() {
   return (
-    <View style={styles.instructionsBox}>
+    <View style={styles.centeredBox}>
       <Text style={styles.header}>Reaction Time Test</Text>
       <Text style={styles.centered}>
         Tap the screen as quickly as you can when you see the colour green.
-        <Text style={{ fontWeight: "bold" }}>Tap to begin.</Text>
+        <Text style={styles.bold}>Tap to begin.</Text>
       </Text>
     </View>
   );
 }
 
-function Result(props: any) {
+function Result(props: { result?: string }) {
   return (
-    <View>
+    <View style={styles.centeredBox}>
       {props.result != null && (
         <View>
           <Text style={styles.reactionResult}>{props.result}</Text>
@@ -97,18 +82,14 @@ function Result(props: any) {
   );
 }
 
-function FinalResult(props: any) {
+function FinalResult(props: { result?: string }) {
   return (
-    <View>
+    <View style={styles.centeredBox}>
       {props.result != null && (
         <View>
-          {/* {props.result.map((x: number, i: number) => (
-            <Text key={i}>{x}</Text>
-          ))} */}
-
-          <Text>{props.result}</Text>
-
-          <Text style={styles.centered}>Click to continue</Text>
+          <Text style={styles.header}>Your Average Reaction Time</Text>
+          <Text style={[styles.centered, styles.subTitle]}>{props.result}</Text>
+          <Text style={[styles.centered, styles.bold]}>Click to continue</Text>
         </View>
       )}
     </View>
@@ -119,13 +100,17 @@ const styles = StyleSheet.create({
   app: {
     minHeight: "100%"
   },
-  instructionsBox: {
+  centeredBox: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     margin: "auto"
   },
   header: {
+    fontSize: 20,
+    fontWeight: "bold"
+  },
+  subTitle: {
     fontSize: 20
   },
   centered: {
@@ -134,5 +119,8 @@ const styles = StyleSheet.create({
   reactionResult: {
     alignSelf: "center",
     fontSize: 30
+  },
+  bold: {
+    fontWeight: "bold"
   }
 });
