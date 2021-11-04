@@ -23,8 +23,11 @@ export default function Reaction() {
         stepToRender = <Instructions />;
         break;
       case GameStatus.Reacting:
-        // No need to render anything whilst reacting yet, could add
-        // text saying click when see colour green in future
+        stepToRender = (
+          <View style={styles.centeredBox}>
+            <Text style={styles.subTitle}>Tap once as fast as you can when you see the colour green!</Text>
+          </View>
+        );
         break;
       case GameStatus.ReactionResult:
         stepToRender = <Result result={gameState.reactionResult} />;
