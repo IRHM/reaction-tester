@@ -25,7 +25,9 @@ export default function Reaction() {
       case GameStatus.Reacting:
         stepToRender = (
           <View style={styles.centeredBox}>
-            <Text style={styles.subTitle}>Tap once as fast as you can when you see the colour green!</Text>
+            <Text style={[styles.subTitle, styles.centeredText]}>
+              Tap once as fast as you can when you see the colour green!
+            </Text>
           </View>
         );
         break;
@@ -64,7 +66,7 @@ function Instructions() {
   return (
     <View style={styles.centeredBox}>
       <Text style={styles.header}>Reaction Time Test</Text>
-      <Text style={styles.centered}>
+      <Text style={styles.centeredText}>
         Tap the screen as quickly as you can when you see the colour green.
         <Text style={styles.bold}>Tap to begin.</Text>
       </Text>
@@ -78,7 +80,7 @@ function Result(props: { result?: string }) {
       {props.result != null && (
         <View>
           <Text style={styles.reactionResult}>{props.result}</Text>
-          <Text style={styles.centered}>Click to continue</Text>
+          <Text style={styles.centeredText}>Click to continue</Text>
         </View>
       )}
     </View>
@@ -91,8 +93,8 @@ function FinalResult(props: { result?: string }) {
       {props.result != null && (
         <View>
           <Text style={styles.header}>Your Average Reaction Time</Text>
-          <Text style={[styles.centered, styles.subTitle]}>{props.result}</Text>
-          <Text style={[styles.centered, styles.bold]}>Click to continue</Text>
+          <Text style={[styles.centeredText, styles.subTitle]}>{props.result}</Text>
+          <Text style={[styles.centeredText, styles.bold]}>Click to continue</Text>
         </View>
       )}
     </View>
@@ -101,7 +103,8 @@ function FinalResult(props: { result?: string }) {
 
 const styles = StyleSheet.create({
   app: {
-    minHeight: "100%"
+    minHeight: "100%",
+    paddingHorizontal: 10
   },
   centeredBox: {
     flex: 1,
@@ -116,7 +119,7 @@ const styles = StyleSheet.create({
   subTitle: {
     fontSize: 20
   },
-  centered: {
+  centeredText: {
     textAlign: "center"
   },
   reactionResult: {

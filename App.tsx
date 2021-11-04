@@ -11,9 +11,9 @@ export default function App() {
     <SafeAreaView>
       <Provider store={store}>
         <View>
-          <Reaction />
-
           <StatusBar style="auto" />
+
+          <Reaction />
         </View>
       </Provider>
     </SafeAreaView>
