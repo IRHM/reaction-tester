@@ -1,32 +1,32 @@
 {
   "expo": {
-    "name": "funapp",
-    "slug": "funapp",
+    "name": "reaction-tester",
+    "slug": "reaction-tester",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo-1024.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/logo-splash-1024.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/logo-1024.png",
         "backgroundColor": "#FFFFFF"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/logo-1024.png"
+    },
+    "description": "Test your reaction time the best way.",
+    "githubUrl": "https://github.com/IRHM/reaction-tester"
   }
 }
