@@ -5,7 +5,10 @@ import gameSlice from "./slices/gameSlice";
 
 const persistConfig = {
   key: "game",
-  storage: AsyncStorage
+  storage: AsyncStorage,
+
+  // Whitelist the pieces of store we want to persist
+  whitelist: ["previousTests"]
 };
 
 const reducers = combineReducers({
