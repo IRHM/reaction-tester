@@ -3,6 +3,14 @@ export interface Game {
   backgroundColor: BackgroundColor;
   reactionResult: string;
   scores: number[];
+  previousTests: ReactionTest[];
+}
+
+export interface ReactionTest {
+  avgTime: number;
+
+  // Holds epoch time in milliseconds
+  dateTime: number;
 }
 
 export enum GameStatus {

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Game, BackgroundColor, GameStatus } from "./../types";
+import Helpers from "../libs/helpers";
+import { Game, BackgroundColor, GameStatus, ReactionTest } from "./../types";
 
 const gameSlice = createSlice({
   name: "game",
@@ -24,11 +25,23 @@ const gameSlice = createSlice({
     },
     resetScores(state) {
       state.value.scores = [];
+    },
+    /**
+     * Save reaction test results.
+     */
+    saveTest(state) {
+      // todo: add check for if game is actually done,
+      // could check if the num of scores = the num of rounds in a test.
+      // Num of rounds will be a var in state so can use it from there.
+      state.value.previousTests.push({
+        avgTime: Helpers.avg(state.value.scores),
+        dateTime: Date.now()
+      } as ReactionTest);
     }
   }
 });
 
-export const { startNew, updateGameStatus, updateBackground, updateReactionResult, addScore, resetScores } =
+export const { startNew, updateGameStatus, updateBackground, updateReactionResult, addScore, resetScores, saveTest } =
   gameSlice.actions;
 
 export default gameSlice.reducer;

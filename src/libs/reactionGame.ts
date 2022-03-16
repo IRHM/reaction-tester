@@ -1,7 +1,14 @@
 import React from "react";
 import Helpers from "./helpers";
 import { GameStatus, BackgroundColor } from "../types";
-import { updateGameStatus, updateBackground, updateReactionResult, addScore, resetScores } from "../slices/gameSlice";
+import {
+  updateGameStatus,
+  updateBackground,
+  updateReactionResult,
+  addScore,
+  resetScores,
+  saveTest
+} from "../slices/gameSlice";
 import { store } from "./../store";
 
 export default class ReactionGame {
@@ -47,6 +54,7 @@ export default class ReactionGame {
   public async startNextRound() {
     if (this.round >= 3) {
       store.dispatch(updateGameStatus(GameStatus.FinalResult));
+      store.dispatch(saveTest());
       return;
     }
 
@@ -89,7 +97,7 @@ export default class ReactionGame {
       store.dispatch(updateReactionResult(`Too Soon!`));
     }
 
-    // Always add to tried, no matter what.
+    // Always add to tries, no matter what.
     this.tries++;
 
     this.greenBackgroundIsShowing = false;
@@ -100,6 +108,6 @@ export default class ReactionGame {
   public getAverageReactionTime() {
     const scores = store.getState().game.value.scores;
 
-    return `${Math.round(scores.reduce((a, b) => a + b) / scores.length)}ms`;
+    return `${Helpers.avg(scores)}ms`;
   }
 }
