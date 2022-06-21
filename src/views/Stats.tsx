@@ -1,13 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 
 export default function Stats() {
+  const gameState = useSelector((state: RootState) => state.game.value);
+
+  console.log(gameState.previousTests);
+
+  const currDate = new Date();
+  const lastWeek = new Date(currDate.setDate(currDate.getDate() - 6));
+  const week = ["Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat"];
+
+  const days: string[] = [];
+  for (let i = 0; i < 7; ++i) {
+    let d = lastWeek.getDay() + i;
+    if (d >= 7) d = d - 7;
+    days.push(week[d]);
+  }
+
+  const lw = gameState.previousTests.filter((e) => {
+    const eDte = new Date(e.dateTime);
+    return eDte.getTime() >= lastWeek.getTime() && eDte.getTime() <= currDate.getTime();
+  });
+
+  console.log(gameState.previousTests, lw);
+
   return (
     <View>
       <LineChart
         data={{
-          labels: ["January", "February", "March", "April", "May", "June"],
+          labels: days,
           datasets: [
             {
               data: [

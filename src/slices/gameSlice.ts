@@ -5,7 +5,11 @@ import { Game, BackgroundColor, GameStatus, ReactionTest } from "./../types";
 const gameSlice = createSlice({
   name: "game",
   initialState: {
-    value: { gameStatus: GameStatus.Instructions, backgroundColor: BackgroundColor.White } as Game
+    value: {
+      gameStatus: GameStatus.Instructions,
+      backgroundColor: BackgroundColor.White,
+      previousTests: new Array<ReactionTest>()
+    } as Game
   },
   reducers: {
     startNew: (state) => {
